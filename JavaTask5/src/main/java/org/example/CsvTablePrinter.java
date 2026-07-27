@@ -2,65 +2,45 @@ package org.example;
 import java.util.*;
 
 public class CsvTablePrinter {
-     static void main(String[] args) {
-        //  2: Store CSV rows
+    public static void main(String[] args) {
+        // Step 2: Store CSV rows
         List<String> rows = Arrays.asList(
                 "Name,Age,City",
                 "Ali,25,Muscat",
                 "Sara,30,Nizwa",
                 "Hassan,70,Sohar",
                 "Mona,15,Salalah",
-                "grtery,ttt"
+                "BadRow,OnlyTwoFields" // malformed row
         );
 
-        //  3: Split header
+        // Step 3: Split header
         String[] header = rows.get(0).split(",");
-        int columnCount = header.length;
 
-        //  5: Calculate column widths
-        int[] widths = new int[columnCount];
-        for (int i = 0; i < columnCount; i++) {
-            widths[i] = header[i].length();
+        // Step 5: Print header
+        for (String h : header) {
+            System.out.print(h + "\t"); // print each title with a tab
         }
+        System.out.println();
 
-        // Adjust widths based on data rows
+        // Separator line
+        System.out.println("-----------------------------");
+
+        // Step 4 + 5: Print data rows
+        int shownCount = 0;
         for (int i = 1; i < rows.size(); i++) {
             String[] fields = rows.get(i).split(",");
-            if (fields.length == columnCount) {
-                for (int j = 0; j < columnCount; j++) {
-                    widths[j] = Math.max(widths[j], fields[j].trim().length());
+            if (fields.length == header.length) {
+                for (String f : fields) {
+                    System.out.print(f.trim() + "\t"); // print each field with a tab
                 }
+                System.out.println();
+                shownCount++;
             } else {
                 System.out.println("Skipping  row: " + rows.get(i));
             }
         }
 
-        //  5: Print header
-        for (int i = 0; i < columnCount; i++) {
-            System.out.printf("%-" + widths[i] + "s ", header[i]);
-        }
-        System.out.println();
-
-        // Separator line
-        int totalWidth = Arrays.stream(widths).sum() + columnCount;
-        System.out.println("-".repeat(totalWidth));
-
-        //  4 + 5: Print rows
-        int shownCount = 0;
-        for (int i = 1; i < rows.size(); i++) {
-            String[] fields = rows.get(i).split(",");
-            if (fields.length == columnCount) {
-                for (int j = 0; j < columnCount; j++) {
-                    System.out.printf("%-" + widths[j] + "s ", fields[j].trim());
-                }
-                System.out.println();
-                shownCount++;
-            } else {
-                System.out.println("Skipping malformed row: " + rows.get(i));
-            }
-        }
-
-        //  6: Print count
+        // Step 6: Print how many rows were shown
         System.out.println("\nData rows shown: " + shownCount);
     }
 }
