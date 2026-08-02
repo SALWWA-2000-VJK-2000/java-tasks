@@ -25,7 +25,7 @@ public class CourseEnrollmentSystem {
                 System.out.print("Enter Student ID " + i + ": ");
                 int studentId = scanner.nextInt();
                 scanner.nextLine();
-
+                int successfulRecords = 0; 
                 if (studentIds.contains(studentId)) {
                     System.out.println("Student ID already exists. Record not added.");
 
@@ -34,6 +34,7 @@ public class CourseEnrollmentSystem {
                     String courseName = scanner.nextLine();
                     studentIds.add(studentId);
                     enrollmentMap.put(studentId, courseName);
+                    successfulRecords++;
                 }
             }
 
@@ -64,21 +65,22 @@ public class CourseEnrollmentSystem {
             }
 
             // 12: Display summary
-            System.out.println("\n--- Enrollment Summary ---");
-            System.out.println("Total student records entered: " + numberOfStudents);
-            System.out.println("Total unique students: " + uniqueCount);
+                System.out.println("\n--- Enrollment Summary ---");
+                System.out.println("Total student records entered: " + successfulRecords);
+                System.out.println("Total unique students: " + uniqueCount);
+                
+                System.out.println("All Student IDs:");
+                for (Integer id : studentIds) {
+                    System.out.println("ID: " + id);
+                }
+                
+                System.out.println("All Student IDs with Courses:");
+                for (Integer id : enrollmentMap.keySet()) {
+                    System.out.println("ID: " + id + ", Course: " + enrollmentMap.get(id));
+                }
+                
+                System.out.println("Enrollment classification: " + classification);
 
-            System.out.println("All Student IDs:");
-            for (Integer id : studentIds) {
-                System.out.println("ID: " + id);
-            }
-
-            System.out.println("All Student IDs with Courses:");
-            for (Integer id : enrollmentMap.keySet()) {
-                System.out.println("ID: " + id + ", Course: " + enrollmentMap.get(id));
-            }
-
-            System.out.println("Enrollment classification: " + classification);
         }
 
         // 14: Close scanner
