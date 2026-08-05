@@ -38,13 +38,17 @@ public class SmartParkingGarage {
                     System.out.print("Add Vehicle\n");
                     System.out.print("Enter vehicle number: ");
                     String input2 = scanner.nextLine();
-                    if (waiting_vehicles.contains(input2) || parked_vehicles.contains(input2)) {
+
+                    if (input2.isEmpty()) {
+                        System.out.print("Error: Vehicle number cannot be empty.\n");
+                    } else if (waiting_vehicles.contains(input2) || parked_vehicles.contains(input2)) {
                         System.out.print("Vehicle already exists.\n");
                     } else {
                         waiting_vehicles.offer(input2);
                         System.out.print("Vehicle added successfully.\n");
                     }
                     break;
+
 
                 case 2:
                     System.out.print("Park Next Vehicle\n");
